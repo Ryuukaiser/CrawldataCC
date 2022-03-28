@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Console\Command;
 use App\truyen;
+use App\chapter;
 use Illuminate\Support\Facades\DB;
 use Weidner\Goutte\GoutteFacade;
 
@@ -25,6 +26,8 @@ class ScrapeTruyen extends Command
      * @var string
      */
     protected $description = 'Command description';
+
+ 
 
     /**
      * Create a new command instance.
@@ -48,29 +51,39 @@ class ScrapeTruyen extends Command
             return $node->attr("href");
         });
        
-        foreach ($linkPost as $link) {
            
-             $this->scrapeData($link);
+     foreach ($linkPost as $link) {
+           
+            $this->scrapeDataTruyen($link);
  
         }
 
     }
-    public function scrapeData($url){
+    public function scrapeDataTruyen($url){
     
-          
+            /** đào dữ liệu trên trang truyện */
             $crawler = GoutteFacade::request('GET', $url);
             $name = $this -> crawlData('h3.title', $crawler);
+            $image =  $crawler->filter('div.book img')->eq(0)->attr('src');
             $author = $this ->crawlData('div.info a',$crawler);
-            $description =  $this -> crawlData('div.desc-text', $crawler);                      
-            
+            $description =  $this -> crawlData('div.desc-text', $crawler);  
+            $linkPost = $crawler->filter('ul.list-chapter a')->each(function ($node) {
+                return $node->attr("href");
+                   });    
+            /**thêm vào dữ liệu        
+
             $truyen = new truyen();
             $truyen->name = $name;
+            $truyen->image= $image;          
             $truyen->author = $author;
             $truyen->description = $description;
-            $truyen->link = $url ;
+            $truyen->link = $url;
+            $truyen->save();           */      
            
     }
 
+   
+       
     protected function crawlData(string $type, $crawler)
     {
         $result = $crawler->filter($type)->each(function ($node) {

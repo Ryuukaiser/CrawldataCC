@@ -16,8 +16,9 @@ class CreateTruyensTable extends Migration
         Schema::create('truyen', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image');
             $table->string('author');
-            $table->string('description',500);
+            $table->string('description',1000);
             $table->string('link');
             $table->timestamps();
         });
