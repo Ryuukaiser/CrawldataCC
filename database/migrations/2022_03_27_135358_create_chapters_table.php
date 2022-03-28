@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTruyensTable extends Migration
+class CreateChaptersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateTruyensTable extends Migration
      */
     public function up()
     {
-        Schema::create('truyen', function (Blueprint $table) {
+        Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image',5000);
-            $table->string('author');
-            $table->string('description',10000);
-            $table->string('link');
+            $table->text('content',21844)->charset('utf8mb4');
+            $table->string('link',5000);
             $table->timestamps();
+            $table->foreignId('idtruyen')->nullable()->constrained('truyen')->onDelete('set null');
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -31,6 +29,6 @@ class CreateTruyensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('truyen');
+        Schema::dropIfExists('chapters');
     }
 }

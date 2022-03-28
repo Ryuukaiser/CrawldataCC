@@ -67,21 +67,51 @@ class ScrapeTruyen extends Command
             $image =  $crawler->filter('div.book img')->eq(0)->attr('src');
             $author = $this ->crawlData('div.info a',$crawler);
             $description =  $this -> crawlData('div.desc-text', $crawler);  
-            $linkPost = $crawler->filter('ul.list-chapter a')->each(function ($node) {
-                return $node->attr("href");
-                   });    
-            /**thêm vào dữ liệu        
-
             $truyen = new truyen();
             $truyen->name = $name;
             $truyen->image= $image;          
             $truyen->author = $author;
             $truyen->description = $description;
             $truyen->link = $url;
-            $truyen->save();           */      
+            $truyen->save();  
+
+            $linkPost = $crawler->filter('ul.list-chapter a')->each(function ($node) {
+                return $node->attr("href");
+            });    
+            foreach ($linkPost as $link) {
+                       
+                $this->scrapeDataChapter($link);
+             
+             }                    
+            
+            
+            
+            
            
     }
 
+    public function scrapeDataChapter($url){
+    
+          
+        $crawler = GoutteFacade::request('GET', $url);
+        $name = $this ->crawlData('a.chapter-title', $crawler);
+        $nametruyen = $this->crawlData('a.truyen-title' , $crawler);  
+        $content  = $this ->crawlData('div.chapter-c ', $crawler);
+        $data = DB::table('truyen')->select('*')->get();
+        $chapter = new chapter();        
+        $chapter->name = $name;
+        $chapter->link = $url;
+        $chapter->content = $content;
+        foreach($data as $value)
+        {
+            if($nametruyen==$value->name)
+            {
+                 $chapter->idtruyen = $value->id;
+            }
+        }
+        $chapter->save();
+
+        }  
    
        
     protected function crawlData(string $type, $crawler)
