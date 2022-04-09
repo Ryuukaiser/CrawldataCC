@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+Route::get('/truyen/{id}', 'TruyenController@show');
+>>>>>>> origin/Huy
 
 =======
 >>>>>>> remotes/origin/Tan
