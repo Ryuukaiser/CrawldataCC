@@ -73,8 +73,16 @@ class ScrapeTruyen extends Command
             $truyen->author = $author;
             $truyen->description = $description;
             $truyen->link = $url;
-            $truyen->save();  
-
+            /**check xem có truyện nào có link giống link đang đào nếu ko thấy thì thêm triuen65 bào */
+            $data = truyen::where('link','=',$url)->select('link')->first();
+            if(empty($data->link))
+            {
+                $truyen->save();  
+                print("thêm vào thành công"."\n");
+            }
+            else{
+                print("đã có truyện"."\n");
+            }
             $linkPost = $crawler->filter('ul.list-chapter a')->each(function ($node) {
                 return $node->attr("href");
             });    
@@ -109,7 +117,16 @@ class ScrapeTruyen extends Command
                  $chapter->idtruyen = $value->id;
             }
         }
-        $chapter->save();
+        $data = chapter::where('link','=',$url)->select('link')->first();
+        if(empty($data->link))
+        {
+            $chapter->save();
+            print("thêm vào thành công"."\n");
+        }
+        else{
+            print("đã có chapter này"."\n");
+        }
+       
 
         }  
    
