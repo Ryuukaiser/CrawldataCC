@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TruyenController extends Controller
 {
+<<<<<<< HEAD
    
 
     public function showChapter($id,$idchap)
@@ -21,4 +22,15 @@ class TruyenController extends Controller
         $prevchap = chapter::where('idtruyen', '=', $chap->idtruyen )->where('id','<',$idchap)->orderByDesc('id')->select('*')->first();
         return view('/page/chapter' , compact('chap','truyen','otherchaps','nextchap','prevchap'));
     }
+=======
+    public function index()
+
+    {
+        $truyens = DB::table('truyen')->paginate(12);  
+        return view('/page/home' , compact('truyens'));
+    }
+
+   
+    
+>>>>>>> remotes/origin/Chuen
 }

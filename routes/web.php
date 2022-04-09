@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> remotes/origin/Tan
 
+=======
+Route::get('/', 'TruyenController@index');
+>>>>>>> remotes/origin/Chuen
 
 Route::get('/truyen/{id}/{idchap}', 'TruyenController@showChapter');
 
