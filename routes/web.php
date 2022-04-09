@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> remotes/origin/Tan
 
 
-
+Route::get('/truyen/{id}/{idchap}', 'TruyenController@showChapter');
 
