@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class TruyenController extends Controller
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
    
 
     public function showChapter($id,$idchap)
@@ -33,4 +34,17 @@ class TruyenController extends Controller
    
     
 >>>>>>> remotes/origin/Chuen
+=======
+    
+
+    public function show($id)
+
+    {
+        $truyen = truyen::where('id', '=', $id)->select('*')->first();
+        $chaps = chapter::where('idtruyen', '=', $id)->select('*')->paginate(10); 
+        return view('/page/truyen' , compact('truyen','chaps'));
+    }
+
+    
+>>>>>>> remotes/origin/Huy
 }
